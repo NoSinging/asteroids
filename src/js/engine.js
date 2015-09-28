@@ -18,8 +18,6 @@ var Engine = (function(global) {
     canvas.width = 505;
     canvas.height = 606;
 
-    ctx.fillStyle = "#000000";
-    ctx.fillRect(0,0,canvas.width,canvas.height);
     doc.body.appendChild(canvas);
 
 
@@ -44,6 +42,20 @@ var Engine = (function(global) {
         // Now instantiate player
         player = new Player;
 
+
+        // This listens for key presses and sends the keys to 
+        // Player.handleInput() method. 
+        document.addEventListener('keydown', function(e) {
+            var allowedKeys = {
+                37: 'left',
+                38: 'up',
+                39: 'right',
+                40: 'down'
+            };
+
+            player.handleInput(allowedKeys[e.keyCode]);
+        });
+
         main();
     }
 
@@ -58,6 +70,9 @@ var Engine = (function(global) {
      */
     function render() {
         
+        ctx.fillStyle = "#000000";
+        ctx.fillRect(0,0,canvas.width,canvas.height);
+
         player.render();
     }
 
