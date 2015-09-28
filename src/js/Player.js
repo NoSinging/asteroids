@@ -2,8 +2,10 @@
 "use strict";
 // player class has an update() & render() method
 class Player {
-    constructor() {
-        this.ROTATION_INCREMENT = Math.PI/10;
+    constructor(position) {
+        this.ROTATION_INCREMENT = Math.PI/10.0;
+        this.position = position;
+        this.velocity = [0.0,0.0];
         this.rotation = 0.0;
     }
     update () {
@@ -15,7 +17,11 @@ class Player {
         var shipRadius=10;
         ctx.beginPath();
         ctx.strokeStyle = '#ff0000';
-        ctx.arc(200,200,shipRadius,0,2*Math.PI);
+        ctx.arc(this.position.x,
+            this.position.y,
+            shipRadius,
+            0,
+            2*Math.PI);
         ctx.stroke();
 
         // draw a radius to indicate direction
@@ -23,12 +29,18 @@ class Player {
         var shipRadiusY = shipRadius*Math.sin(this.rotation);
 
         ctx.beginPath();
-        ctx.moveTo(200+shipRadiusX,200+shipRadiusY);
-        ctx.lineTo(200,200);
+        ctx.moveTo(this.position.x+shipRadiusX,this.position.y+shipRadiusY);
+        ctx.lineTo(this.position.x,this.position.y);
         ctx.stroke();
     }
     getRotation () {
         return this.rotation;
+    }
+    getPosition () {
+        return this.position;
+    }
+    getVelocity () {
+        return this.velocity;
     }
     rotateClockwise () {
         console.log('clockwise')

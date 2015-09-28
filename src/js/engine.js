@@ -40,7 +40,7 @@ var Engine = (function(global) {
     function init() {
 
         // Now instantiate player
-        player = new Player;
+        player = new Player(new Vector(200,150));
 
 
         // This listens for key presses and sends the keys to 
