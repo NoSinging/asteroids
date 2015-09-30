@@ -4,16 +4,16 @@
 class Player {
     constructor(position) {
         this.ROTATION_INCREMENT = Math.PI/10.0;
-        this.VELOCITY_INCREMENT = 1;
-        this.MAX_SPEED = 2;
+        this.VELOCITY_INCREMENT = 20; 
+        this.MAX_SPEED = 400; //unit pixels/second
         this.RADIUS = 10.0;
         this.SHIP_VECTOR = new Vector(this.RADIUS, 0);
         this.position = position;
         this.velocity = new Vector(0, 0);
         this.rotation = 0.0;
     }
-    update () {
-        this.updatePosition();
+    update (dt) {
+        this.updatePosition(dt);
     }
     render () {
         // player ship is made up of a circle and radius
@@ -77,9 +77,9 @@ class Player {
             this.velocity.multiply(this.MAX_SPEED/speed);
         }
     }
-    updatePosition () {
+    updatePosition (dt) {
         //FIXME: add time delta
-        this.position.add(this.velocity);
+        this.position.add(this.velocity.clone().multiply(dt));
     }
 
     handleInput (action) {

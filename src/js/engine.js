@@ -15,7 +15,8 @@ var Engine = (function(global) {
         canvas = doc.createElement('canvas'),
         ctx = canvas.getContext('2d'),
         CANVAS_WIDTH = 505,
-        CANVAS_HEIGHT = 606;
+        CANVAS_HEIGHT = 606,
+        lastTime;
 
     canvas.width = CANVAS_WIDTH;
     canvas.height = CANVAS_HEIGHT;
@@ -28,9 +29,22 @@ var Engine = (function(global) {
      */
     function main() {
 
-        update();
+        /* Get our time delta information which is required if your game
+         * requires smooth animation. Because everyone's computer processes
+         * instructions at different speeds we need a constant value that
+         * would be the same for everyone (regardless of how fast their
+         * computer is) - hurray time!
+         */
+        var now = Date.now(),
+            dt = (now - lastTime) / 1000.0;
+
+        update(dt);
         render();
 
+        /* Set our lastTime variable which is used to determine the time delta
+         * for the next time this function is called.
+         */
+        lastTime = now;
 
         /* Use the browser's requestAnimationFrame function to call this
          * function again as soon as the browser is able to draw another frame.
@@ -38,7 +52,10 @@ var Engine = (function(global) {
         win.requestAnimationFrame(main);
     }
 
-    // initialise game
+    /* This function does some initial setup that should only occur once,
+     * particularly setting the lastTime variable that is required for the
+     * game loop.
+     */
     function init() {
 
         // Now instantiate player
@@ -58,15 +75,15 @@ var Engine = (function(global) {
             player.handleInput(allowedKeys[e.keyCode]);
         });
 
+
+        lastTime = Date.now();
         main();
     }
 
     /* update all game entity's data, e.g. position. 
      */
-    function update() {
-        player.update();
-
-        //FIXME: add time delta
+    function update(dt) {
+        player.update(dt);
 
         // wrap the player to the canvas
         // viewing the wrapped nature of the canvas as a 'property'/ responsibility

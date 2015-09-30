@@ -36,17 +36,22 @@ describe('Player', function (){
 		expect(player.getVelocity()).toEqual(new Vector(2,0));
 	});
 	it('should be able to update the player position', function(){
+		// set time increment to be 10ms
+		var dt = 0.01;
+		// initiate player at origin
 		var player = new Player (new Vector(0,0));
-		player.setVelocity(new Vector(2,0));
-		player.updatePosition();
+		// set a velocity of 200pixels/second in x direction
+		player.setVelocity(new Vector(200,0));
+		player.updatePosition(dt);
+		// expect play to have moved 2 pixels in one time increment
 		expect(player.getPosition()).toEqual(new Vector(2,0));
 	});
 	it('should be able to thrust rocket ship forward: simple scenario', function(){
 		var player = new Player;
 		// scenario 1: stationary & pointed in x direction
-		// assuming player.VELOCITY_INCREMENT = 1
+		// assuming player.VELOCITY_INCREMENT = 20
 		player.thrust();
-		expect(player.getVelocity()).toEqual(new Vector(1,0));
+		expect(player.getVelocity()).toEqual(new Vector(20,0));
 	});
 	it('should be able to limit speed of player FIXME', function(){
 		var player = new Player;
@@ -57,11 +62,11 @@ describe('Player', function (){
 	it('should be able to thrust rocket ship forward: complex scenario', function(){
 		var player = new Player;
 		// scenario 2: moving in x direction & pointed in y direction
-		// assuming player.VELOCITY_INCREMENT = 1
-		player.setVelocity(new Vector(1,0));
+		// assuming player.VELOCITY_INCREMENT = 20
+		player.setVelocity(new Vector(20,0));
 		player.setRotation(Math.PI/2);
 		player.thrust();		
-		expect(player.getVelocity()).toEqual(new Vector(1,1));
+		expect(player.getVelocity()).toEqual(new Vector(20,20));
 
 	});
 })
