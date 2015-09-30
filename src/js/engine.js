@@ -13,10 +13,12 @@ var Engine = (function(global) {
     var doc = global.document,
         win = global.window,
         canvas = doc.createElement('canvas'),
-        ctx = canvas.getContext('2d');
+        ctx = canvas.getContext('2d'),
+        CANVAS_WIDTH = 505,
+        CANVAS_HEIGHT = 606;
 
-    canvas.width = 505;
-    canvas.height = 606;
+    canvas.width = CANVAS_WIDTH;
+    canvas.height = CANVAS_HEIGHT;
 
     doc.body.appendChild(canvas);
 
@@ -40,7 +42,7 @@ var Engine = (function(global) {
     function init() {
 
         // Now instantiate player
-        player = new Player(new Vector(200,150));
+        player = new Player(new Vector(250,300));
 
 
         // This listens for key presses and sends the keys to 
@@ -63,6 +65,14 @@ var Engine = (function(global) {
      */
     function update() {
         player.update();
+
+        //FIXME: add time delta
+
+        // wrap the player to the canvas
+        // viewing the wrapped nature of the canvas as a 'property'/ responsibility
+        // of the canvas.  In much the same way as the 2D surface of a sphere
+        // 'wraps' in 3D.  This is unbeknown to the entity on the 2D surface 
+        player.position.wrap(new Vector(this.CANVAS_WIDTH, this.CANVAS_HEIGHT));
     }
 
 
@@ -79,6 +89,8 @@ var Engine = (function(global) {
 
     // make context available globally
     global.ctx = ctx;
+    global.CANVAS_WIDTH = CANVAS_WIDTH;
+    global.CANVAS_HEIGHT = CANVAS_HEIGHT;
 
     // kick this puppy off!
     init();

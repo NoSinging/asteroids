@@ -29,4 +29,22 @@ class Vector {
     angle () {
     	return Math.atan2(this.y,this.x );
     }
+    clone () {
+    	return new Vector(this.x,this.y );
+    }
+    wrap (topRight) {
+    	// wraps a vector about within a bounding box defined by
+    	// co-ordinates origin & topRight
+    	this.x = this.x % topRight.x;
+    	if (this.x <0)  {
+    		this.x += topRight.x;
+    	};
+
+    	this.y = this.y % topRight.y;
+    	if (this.y <0)  {
+    		this.y += topRight.y;
+    	};
+
+    	return this;
+    }
 }
