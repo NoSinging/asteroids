@@ -14,10 +14,11 @@ var Engine = (function(global) {
         win = global.window,
         canvas = doc.createElement('canvas'),
         ctx = canvas.getContext('2d'),
-        CANVAS_WIDTH = 505,
-        CANVAS_HEIGHT = 606,
+        CANVAS_WIDTH = win.innerWidth,
+        CANVAS_HEIGHT = win.innerHeight,
         lastTime;
-
+    var hasTouch = 'ontouchstart' in window;
+console.log(hasTouch);
     canvas.width = CANVAS_WIDTH;
     canvas.height = CANVAS_HEIGHT;
 
