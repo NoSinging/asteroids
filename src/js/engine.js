@@ -1,9 +1,16 @@
 /* Engine.js
- * Game Loop is copied from Udacity.com Object Oriented JavaScript course project.
- * This file provides the game loop functionality (update and render).
+ * provides the game initiation & loop: 
+ *  - initiates scene - using canvas element
+ *  - event listener - for handling user input 
+ *  - update - applying physics, i.e. motion
+ *  - render - drawing game objects
+ *  - collision dection - TODO
  *
  * This engine is available globally via the Engine variable and it also makes
- * the canvas' context (ctx) object globally available.
+ * the canvas' context (ctx) object globally available for easy rendering.
+ *
+ * Credits:
+ * Game Loop is inspired by Udacity.com Object Oriented JavaScript course project.
  */
 
 var Engine = (function(global) {
@@ -59,7 +66,7 @@ console.log(hasTouch);
      */
     function init() {
 
-        // Now instantiate player
+        // instantiate player
         player = new Player(new Vector(250,300));
 
 
@@ -76,6 +83,13 @@ console.log(hasTouch);
             player.handleInput(allowedKeys[e.keyCode]);
         });
 
+        // and for touch devices
+      document.addEventListener("touchstart", function(e) {
+            e.preventDefault();
+            player.handleInput('up');
+        });
+
+
 
         lastTime = Date.now();
         main();
@@ -90,7 +104,7 @@ console.log(hasTouch);
         // viewing the wrapped nature of the canvas as a 'property'/ responsibility
         // of the canvas.  In much the same way as the 2D surface of a sphere
         // 'wraps' in 3D.  This is unbeknown to the entity on the 2D surface 
-        player.position.wrap(new Vector(this.CANVAS_WIDTH, this.CANVAS_HEIGHT));
+        player.position.wrap(new Vector(CANVAS_WIDTH, CANVAS_HEIGHT));
     }
 
 
@@ -107,8 +121,6 @@ console.log(hasTouch);
 
     // make context available globally
     global.ctx = ctx;
-    global.CANVAS_WIDTH = CANVAS_WIDTH;
-    global.CANVAS_HEIGHT = CANVAS_HEIGHT;
 
     // kick this puppy off!
     init();
