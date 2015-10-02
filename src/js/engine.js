@@ -24,7 +24,7 @@ var Engine = (function(global) {
         CANVAS_WIDTH = win.innerWidth,
         CANVAS_HEIGHT = win.innerHeight,
         lastTime;
-    var hasTouch = 'ontouchstart' in window;
+    var hasTouch = true; //'ontouchstart' in window;
 
     canvas.width = CANVAS_WIDTH;
     canvas.height = CANVAS_HEIGHT;
@@ -87,12 +87,26 @@ var Engine = (function(global) {
             evt.preventDefault();
             var touches = evt.touches;
 
-            if (touches[0].pageX >  canvas.width-100 &&
-                touches[0].pageX <  canvas.width-50 &&
-                touches[0].pageY >  canvas.height-100 &&
-                touches[0].pageY <  canvas.height-50) {
-                console.log('touched the box');
-                player.handleInput('up');
+            if (touches[0].pageX >  canvas.width-200 &&
+                touches[0].pageX <  canvas.width-100 &&
+                touches[0].pageY >  canvas.height-200 &&
+                touches[0].pageY <  canvas.height-100) {
+                console.log('touched the right box');
+                player.handleInput('right');
+            };
+            if (touches[0].pageX >  canvas.width-400 &&
+                touches[0].pageX <  canvas.width-300 &&
+                touches[0].pageY >  canvas.height-200 &&
+                touches[0].pageY <  canvas.height-100) {
+                console.log('touched the left box');
+                player.handleInput('left');
+            };
+            if (touches[0].pageX >  canvas.width-300 &&
+                touches[0].pageX <  canvas.width-200 &&
+                touches[0].pageY >  canvas.height-400 &&
+                touches[0].pageY <  canvas.height-300) {
+                console.log('touched the left box');
+                player.handleInput('left');
             };
         });
 
@@ -125,8 +139,14 @@ var Engine = (function(global) {
         // for touch devices
         // show a touch control on bottom left
         if (hasTouch) {
-            ctx.fillStyle = '#ff0000';
-            ctx.fillRect(canvas.width-100,canvas.height-100,50,50);
+            ctx.strokeStyle = '#ff0000';
+            ctx.lineWidth=5;
+            // clockwise controller
+            ctx.strokeRect(canvas.width-200,canvas.height-200,100,100);
+            // anti-clockwise controller
+            ctx.strokeRect(canvas.width-400,canvas.height-200,100,100);
+            // anti-clockwise thrust
+            ctx.strokeRect(canvas.width-300,canvas.height-400,100,100);
         };
 
         // render play

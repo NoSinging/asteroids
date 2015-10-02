@@ -4,9 +4,9 @@
 class Player {
     constructor(position) {
         this.ROTATION_INCREMENT = Math.PI/10.0;
-        this.VELOCITY_INCREMENT = 20; 
+        this.VELOCITY_INCREMENT = 20;
         this.MAX_SPEED = 400; //unit pixels/second
-        this.RADIUS = 10.0;
+        this.RADIUS = 20.0;
         this.SHIP_VECTOR = new Vector(this.RADIUS, 0);
         this.position = position;
         this.velocity = new Vector(0, 0);
@@ -19,6 +19,7 @@ class Player {
         // player ship is made up of a circle and radius
         // circle
         ctx.beginPath();
+        ctx.lineWidth=5;
         ctx.strokeStyle = '#ff0000';
         ctx.arc(this.position.x, this.position.y, this.RADIUS, 0, 2*Math.PI);
         ctx.stroke();
@@ -66,7 +67,10 @@ class Player {
         var speed = 0;
 
         // velocityDelta is in the direction of the ship
-        // scale velocityDelta by velocity increment & FIXME: time increment
+        // scale velocityDelta by velocity increment 
+        // TODO: Add clock normalisation to acceleration
+        //       assuming it's less import to game play than
+        //       velocity.
         velocityDelta.rotate(this.rotation).multiply(this.VELOCITY_INCREMENT);
         this.velocity.add(velocityDelta);
 
