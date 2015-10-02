@@ -25,12 +25,11 @@ var Engine = (function(global) {
         CANVAS_HEIGHT = win.innerHeight,
         lastTime;
     var hasTouch = 'ontouchstart' in window;
-console.log(hasTouch);
+
     canvas.width = CANVAS_WIDTH;
     canvas.height = CANVAS_HEIGHT;
 
     doc.body.appendChild(canvas);
-
 
     /* This function serves as the kickoff point for the game loop itself
      * and handles calling the update and render methods.
@@ -84,11 +83,18 @@ console.log(hasTouch);
         });
 
         // and for touch devices
-      document.addEventListener("touchstart", function(e) {
-            e.preventDefault();
-            player.handleInput('up');
-        });
+      document.addEventListener("touchstart", function(evt) {
+            evt.preventDefault();
+            var touches = evt.touches;
 
+            if (touches[0].pageX >  canvas.width-100 &&
+                touches[0].pageX <  canvas.width-50 &&
+                touches[0].pageY >  canvas.height-100 &&
+                touches[0].pageY <  canvas.height-50) {
+                console.log('touched the box');
+                player.handleInput('up');
+            };
+        });
 
 
         lastTime = Date.now();
@@ -112,9 +118,18 @@ console.log(hasTouch);
      */
     function render() {
         
+        // render scene
         ctx.fillStyle = "#000000";
         ctx.fillRect(0,0,canvas.width,canvas.height);
 
+        // for touch devices
+        // show a touch control on bottom left
+        if (hasTouch) {
+            ctx.fillStyle = '#ff0000';
+            ctx.fillRect(canvas.width-100,canvas.height-100,50,50);
+        };
+
+        // render play
         player.render();
     }
 
