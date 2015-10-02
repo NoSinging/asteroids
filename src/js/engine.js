@@ -24,7 +24,7 @@ var Engine = (function(global) {
         CANVAS_WIDTH = win.innerWidth,
         CANVAS_HEIGHT = win.innerHeight,
         lastTime;
-    var hasTouch = true; //'ontouchstart' in window;
+    var hasTouch = 'ontouchstart' in window;
 
     canvas.width = CANVAS_WIDTH;
     canvas.height = CANVAS_HEIGHT;
@@ -106,7 +106,7 @@ var Engine = (function(global) {
                 touches[0].pageY >  canvas.height-400 &&
                 touches[0].pageY <  canvas.height-300) {
                 console.log('touched the left box');
-                player.handleInput('left');
+                player.handleInput('up');
             };
         });
 
