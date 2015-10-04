@@ -83,32 +83,8 @@ var Engine = (function(global) {
         });
 
         // and for touch devices
-      document.addEventListener("touchstart", function(evt) {
-            evt.preventDefault();
-            var touches = evt.touches;
-
-            if (touches[0].pageX >  canvas.width-200 &&
-                touches[0].pageX <  canvas.width-100 &&
-                touches[0].pageY >  canvas.height-200 &&
-                touches[0].pageY <  canvas.height-100) {
-                console.log('touched the right box');
-                player.handleInput('right');
-            };
-            if (touches[0].pageX >  canvas.width-400 &&
-                touches[0].pageX <  canvas.width-300 &&
-                touches[0].pageY >  canvas.height-200 &&
-                touches[0].pageY <  canvas.height-100) {
-                console.log('touched the left box');
-                player.handleInput('left');
-            };
-            if (touches[0].pageX >  canvas.width-300 &&
-                touches[0].pageX <  canvas.width-200 &&
-                touches[0].pageY >  canvas.height-400 &&
-                touches[0].pageY <  canvas.height-300) {
-                console.log('touched the left box');
-                player.handleInput('up');
-            };
-        });
+      document.addEventListener("touchstart", handleStart,false);
+      document.addEventListener("touchmove", handleStart,false);
 
 
         lastTime = Date.now();
@@ -141,15 +117,18 @@ var Engine = (function(global) {
         if (hasTouch) {
             ctx.strokeStyle = '#ff0000';
             ctx.lineWidth=5;
-            // clockwise controller
-            ctx.strokeRect(canvas.width-200,canvas.height-200,100,100);
-            // anti-clockwise controller
-            ctx.strokeRect(canvas.width-400,canvas.height-200,100,100);
-            // anti-clockwise thrust
-            ctx.strokeRect(canvas.width-300,canvas.height-400,100,100);
+            // rotation controller is a circle
+            ctx.beginPath();
+            ctx.arc(200, canvas.height-200, 100, 0, 2*Math.PI);
+            ctx.stroke();
+
+            // thrust
+            ctx.beginPath();
+            ctx.arc(canvas.width-200, canvas.height-200, 50, 0, 2*Math.PI);
+            ctx.stroke();
         };
 
-        // render play
+        // render player
         player.render();
     }
 
@@ -159,5 +138,39 @@ var Engine = (function(global) {
 
     // kick this puppy off!
     init();
+
+
+function handleStart(evt) {
+            evt.preventDefault();
+            var touches = evt.touches;
+            // rotation
+            console.log(touches);
+
+            // get touch vector
+            touchVector = new Vector(touches[0].pageX,touches[0].pageY);
+
+            // get touch vector relative to rotation controller centre
+            touchVectorRotationController = touchVector.clone().subtract(new Vector(200, canvas.height-200));
+
+            // get angle relative to x-axis
+            console.log(touchVectorRotationController.angle());
+
+            // get the distance from controller
+            console.log(touchVectorRotationController.length());
+
+            // if touch is within 1.5x radius of rotation control then
+            // count it as a rotation controller movement
+            if (touchVectorRotationController.length() <150) {
+                player.setRotation(touchVectorRotationController.angle());
+            };
+
+            // get touch vector relative to thrust controller centre
+            touchVectorThrustController = touchVector.clone().subtract(new Vector(canvas.width-200, canvas.height-200));
+
+            // thrust
+            if (touchVectorThrustController.length() <50) {
+                player.handleInput('up');
+            };
+        };
 
 })(this);

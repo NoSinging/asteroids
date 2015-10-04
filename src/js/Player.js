@@ -51,11 +51,9 @@ class Player {
         return this;
     }
     rotateClockwise () {
-        console.log('clockwise');
         this.rotation += this.ROTATION_INCREMENT;
     }
     rotateAntiClockwise () {
-        console.log('anti-clockwise');
         this.rotation -= this.ROTATION_INCREMENT;
     }
     thrust () {
@@ -64,8 +62,6 @@ class Player {
         // calculate velocityDelta vector
         // start with a unit vector in x direction
         var velocityDelta = new Vector(1,0);
-        var speed = 0;
-
         // velocityDelta is in the direction of the ship
         // scale velocityDelta by velocity increment 
         // TODO: Add clock normalisation to acceleration
@@ -74,15 +70,19 @@ class Player {
         velocityDelta.rotate(this.rotation).multiply(this.VELOCITY_INCREMENT);
         this.velocity.add(velocityDelta);
 
+        // limit speed
+        this.limitSpeed();
+        
+    }
+    limitSpeed () {
+        var speed = 0;
         // observe a max speed
         speed = this.velocity.length();
-        console.log(speed);
         if (speed > this.MAX_SPEED) {
             this.velocity.multiply(this.MAX_SPEED/speed);
         }
     }
     updatePosition (dt) {
-        //FIXME: add time delta
         this.position.add(this.velocity.clone().multiply(dt));
     }
 

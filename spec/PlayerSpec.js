@@ -53,11 +53,12 @@ describe('Player', function (){
 		player.thrust();
 		expect(player.getVelocity()).toEqual(new Vector(20,0));
 	});
-	it('should be able to limit speed of player FIXME', function(){
+	it('should be able to limit speed of player', function(){
 		var player = new Player;
-		// scenario 1: stationary & pointed in x direction
-		// FIXME
-		expect(false).toBe(true);
+		player.setVelocity(new Vector(800,0));
+		player.limitSpeed();
+		// assuming player.MAX_SPEED = 400
+		expect(player.getVelocity()).toEqual(new Vector(400,0));
 	});
 	it('should be able to thrust rocket ship forward: complex scenario', function(){
 		var player = new Player;

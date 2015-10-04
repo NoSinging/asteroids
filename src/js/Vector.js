@@ -14,6 +14,11 @@ class Vector {
     	this.y += vector.y;
     	return this;
     }
+    subtract (vector) {
+    	this.x -= vector.x;
+    	this.y -= vector.y;
+    	return this;
+    }
     rotate (angleInRadians) {
     	var length = this.length();
     	var initialAngle = this.angle();

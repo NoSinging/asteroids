@@ -78,4 +78,9 @@ describe('Vector', function (){
 		var vectorBelowBox = new Vector(300,-10);
 		expect(vectorBelowBox.wrap(topRight)).toEqual(new Vector(300,390));
 	});
+
+	it('should be able to subtract a Vector from a Vector', function(){
+		var vector = new Vector(3,3);
+		expect(vector.subtract(new Vector(1,2))).toEqual(new Vector(2,1));
+	});
 })
