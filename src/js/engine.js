@@ -17,6 +17,7 @@ var Engine = (function(global) {
     /* create the canvas element, grab the 2D context for that canvas
      * set the canvas elements height/width and add it to the DOM.
      */
+    // FIXME: format this more neatly
     var doc = global.document,
         win = global.window,
         canvas = doc.createElement('canvas'),
@@ -42,8 +43,8 @@ var Engine = (function(global) {
          * would be the same for everyone (regardless of how fast their
          * computer is) - hurray time!
          */
-        var now = Date.now(),
-            dt = (now - lastTime) / 1000.0;
+        var now = Date.now();
+        var dt = (now - lastTime) / 1000.0;
 
         update(dt);
         render();
@@ -65,12 +66,21 @@ var Engine = (function(global) {
      */
     function init() {
 
-        // instantiate player
-        player = new Player(new Vector(250,300));
+        scene = new Scene(CANVAS_WIDTH, CANVAS_HEIGHT);
+        global.scene = scene;
 
+        // instantiate player
+        player = new Player(scene.getCentre());
+
+        // Add touch controllers
+        // FIXME: only for touch devices
+
+        rotationController  = new RotationController(player);
+        thrustController    = new ThurstController(player);
 
         // This listens for key presses and sends the keys to 
         // Player.handleInput() method. 
+        // FIXME: move to the keyEventHandler and put logic in controllers
         document.addEventListener('keydown', function(e) {
             var allowedKeys = {
                 37: 'left',
@@ -85,6 +95,7 @@ var Engine = (function(global) {
         // and for touch devices
       document.addEventListener("touchstart", handleStart,false);
       document.addEventListener("touchmove", handleStart,false);
+      // FIXME: make thrust continuous while touching control
 
 
         lastTime = Date.now();
@@ -100,6 +111,7 @@ var Engine = (function(global) {
         // viewing the wrapped nature of the canvas as a 'property'/ responsibility
         // of the canvas.  In much the same way as the 2D surface of a sphere
         // 'wraps' in 3D.  This is unbeknown to the entity on the 2D surface 
+        // FIXME: wrap around scene
         player.position.wrap(new Vector(CANVAS_WIDTH, CANVAS_HEIGHT));
     }
 
@@ -108,24 +120,13 @@ var Engine = (function(global) {
      */
     function render() {
         
-        // render scene
-        ctx.fillStyle = "#000000";
-        ctx.fillRect(0,0,canvas.width,canvas.height);
+        scene.render();
 
-        // for touch devices
-        // show a touch control on bottom left
+        // show controllers on touch devices
+        // FIXME: let the control decide if it is visible
         if (hasTouch) {
-            ctx.strokeStyle = '#ff0000';
-            ctx.lineWidth=5;
-            // rotation controller is a circle
-            ctx.beginPath();
-            ctx.arc(200, canvas.height-200, 100, 0, 2*Math.PI);
-            ctx.stroke();
-
-            // thrust
-            ctx.beginPath();
-            ctx.arc(canvas.width-200, canvas.height-200, 50, 0, 2*Math.PI);
-            ctx.stroke();
+            rotationController.render();
+            thrustController.render();
         };
 
         // render player
@@ -140,37 +141,15 @@ var Engine = (function(global) {
     init();
 
 
-function handleStart(evt) {
-            evt.preventDefault();
-            var touches = evt.touches;
-            // rotation
-            console.log(touches);
+    function handleStart(evt) {
+        evt.preventDefault();
+        var touches = evt.touches;
 
-            // get touch vector
-            touchVector = new Vector(touches[0].pageX,touches[0].pageY);
+        // get touch vector
+        touchVector = new Vector(touches[0].pageX,touches[0].pageY);
 
-            // get touch vector relative to rotation controller centre
-            touchVectorRotationController = touchVector.clone().subtract(new Vector(200, canvas.height-200));
-
-            // get angle relative to x-axis
-            console.log(touchVectorRotationController.angle());
-
-            // get the distance from controller
-            console.log(touchVectorRotationController.length());
-
-            // if touch is within 1.5x radius of rotation control then
-            // count it as a rotation controller movement
-            if (touchVectorRotationController.length() <150) {
-                player.setRotation(touchVectorRotationController.angle());
-            };
-
-            // get touch vector relative to thrust controller centre
-            touchVectorThrustController = touchVector.clone().subtract(new Vector(canvas.width-200, canvas.height-200));
-
-            // thrust
-            if (touchVectorThrustController.length() <50) {
-                player.handleInput('up');
-            };
+        rotationController.handleTouchEvent(touchVector.clone());
+        thrustController.handleTouchEvent(touchVector.clone());
         };
 
 })(this);

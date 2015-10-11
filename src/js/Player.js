@@ -1,4 +1,3 @@
-
 "use strict";
 // player class has an update() & render() method
 class Player {
