@@ -143,13 +143,26 @@ var Engine = (function(global) {
 
     function handleStart(evt) {
         evt.preventDefault();
+//        var touches = evt.changedTouches;
         var touches = evt.touches;
 
-        // get touch vector
-        touchVector = new Vector(touches[0].pageX,touches[0].pageY);
+        for (var i = 0; i < touches.length; i++) {
+            //console.log("touchstart:" + i + "...");
+            touchVector = new Vector(touches[i].pageX,touches[i].pageY);
+            rotationController.handleTouchEvent(touchVector.clone());
+            thrustController.handleTouchEvent(touchVector.clone());
+            };
 
-        rotationController.handleTouchEvent(touchVector.clone());
-        thrustController.handleTouchEvent(touchVector.clone());
+//console.log(touches);
+/*
+        touches.forEach(function (touch, index, array) {
+            // get touch vector
+            touchVector = new Vector(touch.pageX,touch.pageY);
+
+            rotationController.handleTouchEvent(touchVector.clone());
+            thrustController.handleTouchEvent(touchVector.clone());
+            });
+*/
         };
 
 })(this);
