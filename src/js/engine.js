@@ -148,9 +148,9 @@ var Engine = (function(global) {
 
         for (var i = 0; i < touches.length; i++) {
             //console.log("touchstart:" + i + "...");
-            touchVector = new Vector(touches[i].pageX,touches[i].pageY);
-            rotationController.handleTouchEvent(touchVector.clone());
-            thrustController.handleTouchEvent(touchVector.clone());
+            //touchVector = new Vector(touches[i].pageX,touches[i].pageY);
+            rotationController.handleTouchEvent(new Vector(touches[i].pageX,touches[i].pageY));
+            thrustController.handleTouchEvent(new Vector(touches[i].pageX,touches[i].pageY));
             };
 
 //console.log(touches);
