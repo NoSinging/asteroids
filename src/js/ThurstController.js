@@ -11,7 +11,7 @@ class ThurstController {
         var relativeTouchVector = touchVector.clone().subtract(this.position);
 
         // thrust
-        if (relativeTouchVector.length() <this.RADIUS) {
+        if (relativeTouchVector.length() <this.RADIUS*1.5) {
             player.thrust();
         };
     }

@@ -7,14 +7,14 @@ class RotationController {
     }
 
     handleTouchEvent(touchVector) {
-            // get touch vector relative to rotation controller centre
-            var relativeTouchVector = touchVector.clone().subtract(this.position);
+        // get touch vector relative to rotation controller centre
+        var relativeTouchVector = touchVector.clone().subtract(this.position);
 
-            // if touch is within 1.5x radius of rotation control then
-            // count it as a rotation controller movement
-            if (relativeTouchVector.length() < (this.RADIUS * 1.5)) {
-                this.player.setRotation(relativeTouchVector.angle());
-            };
+        // if touch is within 1.5x radius of rotation control then
+        // count it as a rotation controller movement
+        if (relativeTouchVector.length() < (this.RADIUS * 1.5)) {
+            this.player.setRotation(relativeTouchVector.angle());
+        };
     }
 
     render () {

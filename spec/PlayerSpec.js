@@ -5,8 +5,7 @@ describe('Player', function (){
 	});
 	it('should be able to set initial position', function(){
 		var player = new Player(new Vector(200,100));
-		expect(player.getPosition().x).toBe(200);
-		expect(player.getPosition().y).toBe(100);
+		expect(player.getPosition()).toEqual(new Vector(200,100));
 	});
 	it('the initial player rotation should be zero', function(){
 		var player = new Player;

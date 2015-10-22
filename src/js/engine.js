@@ -18,13 +18,13 @@ var Engine = (function(global) {
      * set the canvas elements height/width and add it to the DOM.
      */
     // FIXME: format this more neatly
-    var doc = global.document,
-        win = global.window,
-        canvas = doc.createElement('canvas'),
-        ctx = canvas.getContext('2d'),
-        CANVAS_WIDTH = win.innerWidth,
-        CANVAS_HEIGHT = win.innerHeight,
-        lastTime;
+    var doc = global.document;
+    var win = global.window;
+    var canvas = doc.createElement('canvas');
+    var ctx = canvas.getContext('2d');
+    var CANVAS_WIDTH = win.innerWidth;
+    var CANVAS_HEIGHT = win.innerHeight;
+    var lastTime;
     var hasTouch = 'ontouchstart' in window;
 
     canvas.width = CANVAS_WIDTH;
@@ -95,7 +95,7 @@ var Engine = (function(global) {
         // and for touch devices
       document.addEventListener("touchstart", handleStart,false);
       document.addEventListener("touchmove", handleStart,false);
-      // FIXME: make thrust continuous while touching control
+      // FIXME: make thrust continuous while touching control. seems  to work?
 
 
         lastTime = Date.now();
@@ -111,7 +111,7 @@ var Engine = (function(global) {
         // viewing the wrapped nature of the canvas as a 'property'/ responsibility
         // of the canvas.  In much the same way as the 2D surface of a sphere
         // 'wraps' in 3D.  This is unbeknown to the entity on the 2D surface 
-        // FIXME: wrap around scene
+        // FIXME: wrap around scene would be neater
         player.position.wrap(new Vector(CANVAS_WIDTH, CANVAS_HEIGHT));
     }
 
@@ -124,6 +124,7 @@ var Engine = (function(global) {
 
         // show controllers on touch devices
         // FIXME: let the control decide if it is visible
+        //          relevant if we move key controls into controller
         if (hasTouch) {
             rotationController.render();
             thrustController.render();
@@ -143,26 +144,15 @@ var Engine = (function(global) {
 
     function handleStart(evt) {
         evt.preventDefault();
-//        var touches = evt.changedTouches;
+        // FIXME: changedTouches vs touches???
+        // FIXME: hold thrust button down.  Seems to work.
+        //        var touches = evt.changedTouches;
         var touches = evt.touches;
 
         for (var i = 0; i < touches.length; i++) {
-            //console.log("touchstart:" + i + "...");
-            //touchVector = new Vector(touches[i].pageX,touches[i].pageY);
             rotationController.handleTouchEvent(new Vector(touches[i].pageX,touches[i].pageY));
             thrustController.handleTouchEvent(new Vector(touches[i].pageX,touches[i].pageY));
             };
-
-//console.log(touches);
-/*
-        touches.forEach(function (touch, index, array) {
-            // get touch vector
-            touchVector = new Vector(touch.pageX,touch.pageY);
-
-            rotationController.handleTouchEvent(touchVector.clone());
-            thrustController.handleTouchEvent(touchVector.clone());
-            });
-*/
         };
 
 })(this);
