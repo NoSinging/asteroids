@@ -83,6 +83,7 @@ class Player {
     }
     updatePosition (dt) {
         this.position.add(this.velocity.clone().multiply(dt));
+        
     }
 
     handleInput (action) {

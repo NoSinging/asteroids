@@ -72,6 +72,11 @@ var Engine = (function(global) {
         // instantiate player
         player = new Player(scene.getCentre());
 
+
+        // instantiate asteroids        
+        asteroidManager = new AsteroidManager (scene);
+        asteroidManager.initiate();
+
         // Add touch controllers
         // FIXME: only for touch devices
 
@@ -111,8 +116,10 @@ var Engine = (function(global) {
         // viewing the wrapped nature of the canvas as a 'property'/ responsibility
         // of the canvas.  In much the same way as the 2D surface of a sphere
         // 'wraps' in 3D.  This is unbeknown to the entity on the 2D surface 
-        // FIXME: wrap around scene would be neater
-        player.position.wrap(new Vector(CANVAS_WIDTH, CANVAS_HEIGHT));
+        player.position.wrap(scene.getCorner());
+
+        // render asteroids
+        asteroidManager.update(dt);
     }
 
 
@@ -132,6 +139,9 @@ var Engine = (function(global) {
 
         // render player
         player.render();
+
+        // render asteroids
+        asteroidManager.render();
     }
 
 

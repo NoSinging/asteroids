@@ -8,6 +8,10 @@ class Scene {
     getCentre () {
         return new Vector (this.width/2, this.height/2);
     }
+
+    getCorner () {
+        return new Vector (this.width, this.height);
+    }
     
     render () {
         // render scene
