@@ -25,9 +25,5 @@ class Asteroid {
     updatePosition (dt) {
     	//increment the position based on velocity and time increment
         this.position.add(this.velocity.clone().multiply(dt));
-
-        // wrap around the scene boundary
-        // FIXME: TDD please - scene - really
-        this.position.wrap(scene.getCorner());
     }
 }

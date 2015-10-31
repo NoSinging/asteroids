@@ -2,19 +2,30 @@
 // player class has an update() & render() method
 class Player {
     constructor(position) {
-        this.ROTATION_INCREMENT = Math.PI/10.0;
+        this.ROTATION_INCREMENT = Math.PI/20.0;
         this.VELOCITY_INCREMENT = 20;
         this.MAX_SPEED = 400; //unit pixels/second
-        this.RADIUS = 20.0;
-        this.SHIP_VECTOR = new Vector(this.RADIUS, 0);
+        //this.RADIUS = 20.0;
+        //this.SHIP_VECTOR = new Vector(this.RADIUS, 0);
         this.position = position;
         this.velocity = new Vector(0, 0);
         this.rotation = 0.0;
+        // the ship shape
+        this.vertices = [   new Vector(-20,-20),
+                            new Vector(60,0),
+                            new Vector(-20,20)];
+        this.polygon = new Polygon (this.vertices, '#ff0000', 5);
     }
     update (dt) {
         this.updatePosition(dt);
     }
     render () {
+
+        this.polygon.setPosition(this.position);
+        this.polygon.setRotation(this.rotation);
+        this.polygon.render();
+
+        /* old
         // player ship is made up of a circle and radius
         // circle
         ctx.beginPath();
@@ -31,6 +42,7 @@ class Player {
         ctx.moveTo(this.position.x+rotatedShipVector.x,this.position.y+rotatedShipVector.y);
         ctx.lineTo(this.position.x,this.position.y);
         ctx.stroke();
+        */
     }
     getRotation () {
         return this.rotation;

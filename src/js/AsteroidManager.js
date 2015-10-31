@@ -27,6 +27,13 @@ class AsteroidManager {
     	var i;
 		for (i in this.asteroids) {
 		    this.asteroids[i].update(dt);
+
+            // wrap around the scene boundary
+            this.asteroids[i].getPosition().wrap(scene.getCorner());
+
+            //TODO: a more sophisticated wrap
+            // smooth out the jerky wrap
+            // possible solution is render a reflection of the asteroid at the opposite scene boundary
 		}
     }
 }
