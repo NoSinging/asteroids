@@ -22,7 +22,7 @@ class Asteroid {
                             new Vector(160,0)];
         this.polygon = new Polygon (this.vertices, '#ffffff', 5);
         this.rotation = 2*Math.PI*Math.random();
-        this.polygon.setRotation(this.rotation);
+        this.ROTATION_INCREMENT = (Math.random()-0.5)*Math.PI/200.0;
     }
     getPosition () {
         return this.position;
@@ -31,18 +31,11 @@ class Asteroid {
 
 
         this.polygon.setPosition(this.position);
+        this.polygon.setRotation(this.rotation);
         this.polygon.render();
-        /*
-        // asteroid is a circle. for now!
-        // TODO: make me a polygon
-        ctx.beginPath();
-        ctx.lineWidth=5;
-        ctx.strokeStyle = this.COLOUR;
-        ctx.arc(this.position.x, this.position.y, this.RADIUS, 0, 2*Math.PI);
-        ctx.stroke();
-        */
     }
     update (dt) {
+        this.rotation += this.ROTATION_INCREMENT;
         this.updatePosition(dt);
     }
     updatePosition (dt) {

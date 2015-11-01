@@ -2,7 +2,7 @@
 class AsteroidManager {
     constructor(scene) {
     	this.scene = scene;
-    	this.NUM_ASTEROIDS = 10;
+    	this.NUM_ASTEROIDS = 6;
     	this.asteroids = [];
     }
     spawn() {
