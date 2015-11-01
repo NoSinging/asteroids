@@ -21,6 +21,8 @@ class Asteroid {
                             new Vector(120,-30),
                             new Vector(160,0)];
         this.polygon = new Polygon (this.vertices, '#ffffff', 5);
+        this.rotation = 2*Math.PI*Math.random();
+        this.polygon.setRotation(this.rotation);
     }
     getPosition () {
         return this.position;
