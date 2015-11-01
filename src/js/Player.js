@@ -4,9 +4,7 @@ class Player {
     constructor(position) {
         this.ROTATION_INCREMENT = Math.PI/20.0;
         this.VELOCITY_INCREMENT = 20;
-        this.MAX_SPEED = 400; //unit pixels/second
-        //this.RADIUS = 20.0;
-        //this.SHIP_VECTOR = new Vector(this.RADIUS, 0);
+        this.MAX_SPEED          = 400; //unit pixels/second
         this.position = position;
         this.velocity = new Vector(0, 0);
         this.rotation = 0.0;
@@ -25,24 +23,6 @@ class Player {
         this.polygon.setRotation(this.rotation);
         this.polygon.render();
 
-        /* old
-        // player ship is made up of a circle and radius
-        // circle
-        ctx.beginPath();
-        ctx.lineWidth=5;
-        ctx.strokeStyle = '#ff0000';
-        ctx.arc(this.position.x, this.position.y, this.RADIUS, 0, 2*Math.PI);
-        ctx.stroke();
-
-        // draw a radius to indicate direction
-        // FIXME: could do this rotation more efficiently elsewhere
-        var rotatedShipVector = this.SHIP_VECTOR.clone().rotate(this.rotation);
-
-        ctx.beginPath();
-        ctx.moveTo(this.position.x+rotatedShipVector.x,this.position.y+rotatedShipVector.y);
-        ctx.lineTo(this.position.x,this.position.y);
-        ctx.stroke();
-        */
     }
     getRotation () {
         return this.rotation;
