@@ -1,11 +1,14 @@
 "use strict";
 class Polygon {
-    constructor(vertices, colour, lineWidth) {
+    constructor(vertices, scale, colour, lineWidth) {
         this.position = new Vector(0, 0);
         this.vertices = vertices;
         this.rotation = 0.0;
         this.colour = colour;
         this.lineWidth = lineWidth;
+
+        //scale the vertices
+        this.vertices.forEach(function(vertex) {vertex.multiply(scale)});
     }
 
     setPosition (position) {

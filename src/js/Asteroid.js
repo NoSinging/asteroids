@@ -2,8 +2,6 @@
 class Asteroid {
     constructor(position) {
         this.position = position;
-        //this.RADIUS = 100;
-        //this.COLOUR = '#ffffff';//'#ff0000';
         this.velocity = new Vector(20, 0);
         this.velocity.rotate(2*Math.PI*Math.random());
         this.vertices = [   new Vector(160,0),
@@ -20,7 +18,7 @@ class Asteroid {
                             new Vector(60,-60),
                             new Vector(120,-30),
                             new Vector(160,0)];
-        this.polygon = new Polygon (this.vertices, '#ffffff', 5);
+        this.polygon = new Polygon (this.vertices, 1, '#ffffff', 5);
         this.rotation = 2*Math.PI*Math.random();
         this.ROTATION_INCREMENT = (Math.random()-0.5)*Math.PI/200.0;
     }
