@@ -69,4 +69,16 @@ describe('Player', function (){
 		expect(player.getVelocity()).toEqual(new Vector(20,20));
 
 	});
+	it('should be able to detect a collison between a player and an asteroid', function(){
+		var player = new Player (new Vector(0,0));
+		var asteroid = new Asteroid (new Vector(0,0));
+		expect(player.checkCollison(asteroid)).toBe(true);
+
+	});
+	it('should be able to detect a non-collison between a player and an asteroid', function(){
+		// player has a radius of 30 & asteroid has a radius of 160, so positioning 191 apart.
+		var player = new Player(new Vector(0,0)); 
+		var asteroid = new Asteroid (new Vector(191,0));
+		expect(player.checkCollison(asteroid)).toBe(false);
+	});
 })

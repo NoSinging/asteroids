@@ -9,6 +9,7 @@ class Player {
         this.velocity = new Vector(0, 0);
         this.rotation = 0.0;
         this.thrustStateCounter = 0;
+        this.collider = new Collider(this, 30);
         // the ship shape
         this.vertices = [   new Vector(6,0),
                             new Vector(0,2),
@@ -56,8 +57,14 @@ class Player {
     getRotation () {
         return this.rotation;
     }
+    getCollider () {
+        return this.collider;
+    }
     getThrustState () {
         return (this.thrustStateCounter > 0);
+    }
+    checkCollison (body2) {
+        return this.collider.checkCollision(body2.getCollider());
     }
     setThrustState (state) {
         // there's difference between frame rate and user input rate

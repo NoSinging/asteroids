@@ -21,13 +21,15 @@ class Asteroid {
         this.polygon = new Polygon (this.vertices, 1, '#ffffff', 5);
         this.rotation = 2*Math.PI*Math.random();
         this.ROTATION_INCREMENT = (Math.random()-0.5)*Math.PI/200.0;
+        this.collider = new Collider(this, 160);
     }
     getPosition () {
         return this.position;
     }
+    getCollider () {
+        return this.collider;
+    }
     render () {
-
-
         this.polygon.setPosition(this.position);
         this.polygon.setRotation(this.rotation);
         this.polygon.render();
