@@ -8,6 +8,9 @@ class AsteroidManager {
     spawn() {
     	return new Asteroid( new Vector(Math.random()*this.scene.width, Math.random()*this.scene.height));
     }
+    getAsteroids() {
+        return this.asteroids;
+    }
     initiate() {
 	    var i;
 	    for (i = 0; i < this.NUM_ASTEROIDS; i++) {

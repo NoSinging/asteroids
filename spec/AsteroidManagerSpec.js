@@ -11,5 +11,6 @@ describe('Asteroid Manager', function (){
 		var asteroidManager = new AsteroidManager (new Scene(800,1000));
 		asteroidManager.initiate();
 		expect(asteroidManager.count()).toBe(6);
+		expect(asteroidManager.getAsteroids().length).toBe(6);
 	});
 })
